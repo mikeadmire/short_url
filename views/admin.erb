@@ -4,7 +4,20 @@
     <title>Admire Shortened URL</title>
   </head>
   <body>
-    <h1>Admin</h1>
-    <h3><%= @adminurl %></h3>
+    <h1>Shorten</h1>
+    <form method="post">
+      Key: <input type="text" name="key"><br />
+      URL: <input type="text" name="url"> *<br />
+      <input type="submit" text="Create">
+    </form>
+
+    <p>* You can put in a URL and a desired key or you can just put
+    a URL in and a key will be generated for you.</p>
+
+    <ul>
+    <% @list.each do |line| %>
+      <li><%= line %></li>
+    <% end %>
+    </ul>
   </body>
 </html>

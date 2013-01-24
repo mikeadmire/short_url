@@ -15,11 +15,13 @@ class ShortURL
 
   def self.create(key, url)
     set = self.new
-    if key_in_use(key)
-      puts "Key is already in use"
+    message = ""
+    if set.key_in_use(key)
+      message = "Key is already in use"
     else
-      set.create(key, url)
+      message = set.create(key, url)
     end
+    message
   end
 
   def self.lookup(key)
@@ -42,16 +44,16 @@ class ShortURL
 
   def list
     keys = @redis.keys('*')
-    list = Array.new
+    list = Hash.new
     keys.each do |key|
-      list << { key => @redis.get(key)}
+      list[key] = @redis.get(key)
     end
-    list
+    list.sort_by {|key,url| key}
   end
  
   def create(key, url)
     @redis.set(key, url)
-    puts "#{@base_url}#{key}"
+    "#{@base_url}#{key}"
   end
 
   def generate_key

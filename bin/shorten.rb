@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
+require File.expand_path('../lib/short_url', File.dirname(__FILE__))
 
-require File.join(File.dirname(__FILE__), '..', 'lib', 'short_url')
 
 class Shorten
 
