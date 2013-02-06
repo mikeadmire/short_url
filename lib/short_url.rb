@@ -5,7 +5,7 @@ require 'yaml'
 
 class ShortURL
 
-  attr_accessor :adminurl
+  attr_reader :adminurl, :defaulturl
  
   def self.autocreate(url)
     set = self.new
@@ -16,7 +16,7 @@ class ShortURL
   def self.create(key, url)
     set = self.new
     message = ""
-    if set.key_in_use(key)
+    if set.key_in_use?(key)
       message = "Key is already in use"
     else
       message = set.create(key, url)
@@ -34,7 +34,9 @@ class ShortURL
   def initialize
     config = YAML.load_file(File.join('config', 'config.yml'))
     @base_url = config['baseurl']
+    @defaulturl = config['defaulturl']
     @adminurl = config['adminurl']
+    @keysize = config['keysize']
     @redis = Redis.new(:db => config['dbnum'])
   end
 
@@ -57,21 +59,21 @@ class ShortURL
   end
 
   def generate_key
-    key = random_char
-    if key_in_use(key)
+    key = random_chars
+    if key_in_use?(key)
       generate_key
     else
       return key
     end
   end
 
-  def key_in_use(key)
+  def key_in_use?(key)
     !(@redis.get(key).nil?)
   end
 
-  def random_char
+  def random_chars
     o = [('a'..'z'),('A'..'Z'),(0..9)].map{|i| i.to_a}.flatten
-    (0...3).map{ o[rand(o.length)] }.join
+    (0...@keysize).map{ o[rand(o.length)] }.join
   end
 
 end

@@ -9,7 +9,7 @@ class Server
 
 
   get '/' do
-    File.read(File.join('public', 'index.html'))
+    redirect ShortURL.new.defaulturl
   end
 
   post "/#{settings.adminurl}" do
