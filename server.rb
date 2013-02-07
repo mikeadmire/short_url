@@ -3,8 +3,20 @@ require File.expand_path('lib/short_url')
 
 class Server
 
-  configure do
-    set :adminurl, ShortURL.new.adminurl
+  # Setup basic auth helpers
+  helpers do
+    def protected!
+      unless authorized?
+        response['WWW-Authenticate'] = %(Basic realm="Restricted")
+        throw(:halt, [401, "Not authorized\n"])
+      end
+    end
+
+    def authorized?
+      @auth ||= Rack::Auth::Basic::Request.new(request.env)
+      @auth.provided? && @auth.basic? && @auth.credentials &&
+        @auth.credentials == ShortURL.new.auth_credentials
+    end
   end
 
 
@@ -12,7 +24,13 @@ class Server
     redirect ShortURL.new.defaulturl
   end
 
-  post "/#{settings.adminurl}" do
+  get "/#{ShortURL.new.adminurl}" do
+    protected!
+    @list = ShortURL.new.list
+    erb :admin
+  end
+
+  post "/#{ShortURL.new.adminurl}" do
     if (!params[:key].empty? && !params[:url].empty?)
       message = ShortURL.create(params[:key], params[:url])
     elsif (!params[:url].empty?)
@@ -26,10 +44,7 @@ class Server
   get '/:key' do
     url = ShortURL.lookup(params[:key])
 
-    if (params[:key] == settings.adminurl)
-      @list = ShortURL.new.list
-      erb :admin
-    elsif (url)
+    if (url)
       redirect url
     else
       File.read(File.join('public', '404.html'))

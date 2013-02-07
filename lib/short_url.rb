@@ -5,7 +5,7 @@ require 'yaml'
 
 class ShortURL
 
-  attr_reader :adminurl, :defaulturl
+  attr_reader :adminurl, :defaulturl, :auth_credentials
  
   def self.autocreate(url)
     set = self.new
@@ -38,6 +38,7 @@ class ShortURL
     @adminurl = config['adminurl']
     @keysize = config['keysize']
     @redis = Redis.new(:db => config['dbnum'])
+    @auth_credentials = [config['username'], config['password']]
   end
 
   def lookup(key)
