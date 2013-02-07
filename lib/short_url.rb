@@ -60,11 +60,10 @@ class ShortURL
 
   def generate_key
     key = random_chars
-    if key_in_use?(key)
+    if(key == @adminurl || key_in_use?(key))
       generate_key
-    else
-      return key
     end
+    key
   end
 
   def key_in_use?(key)
@@ -84,5 +83,4 @@ if __FILE__ == $0
   p ShortURL.new.list
 
 end
-
 
