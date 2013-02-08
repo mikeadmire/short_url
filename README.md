@@ -8,8 +8,8 @@ page redirects.
 ## Installation
 
 It's a Rack app. You need a Rack application server like Passenger
-or Unicorn in order to run it. You can find more info at
-<http://rack.rubyforge.org/doc/>
+or Unicorn or a service like Heroku in order to run it. You can
+find more info at <http://rack.rubyforge.org/doc/>
 
 1. git clone git://github.com/mikeadmire/short_url.git
 2. cd short_url
