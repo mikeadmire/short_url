@@ -32,6 +32,7 @@ class Server
   end
 
   post "/#{ShortURL.new.adminurl}" do
+    protected!
     if (!params[:key].empty? && !params[:url].empty?)
       message = ShortURL.create(params[:key], params[:url])
     elsif (!params[:url].empty?)
