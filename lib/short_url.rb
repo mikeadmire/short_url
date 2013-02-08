@@ -5,7 +5,7 @@ require 'yaml'
 
 class ShortURL
 
-  attr_reader :adminurl, :defaulturl, :auth_credentials
+  attr_reader :adminurl, :defaulturl, :auth_credentials, :baseurl
  
   def self.autocreate(url)
     set = self.new
@@ -33,7 +33,7 @@ class ShortURL
 
   def initialize
     config = YAML.load_file(File.join('config', 'config.yml'))
-    @base_url = config['baseurl']
+    @baseurl = config['baseurl']
     @defaulturl = config['defaulturl']
     @adminurl = config['adminurl']
     @keysize = config['keysize']
@@ -51,12 +51,12 @@ class ShortURL
     keys.each do |key|
       list[key] = @redis.get(key)
     end
-    list.sort_by {|key,url| key}
+    list #.sort_by {|key,url| url}
   end
  
   def create(key, url)
     @redis.set(key, url)
-    "#{@base_url}#{key}"
+    "#{@baseurl}#{key}"
   end
 
   def generate_key

@@ -14,10 +14,11 @@
     <p>* You can put in a URL and a desired key or you can just put
     a URL in and a key will be generated for you.</p>
 
-    <ul>
-    <% @list.each do |line| %>
-      <li><%= line %></li>
+    <br /><br />
+    <table>
+    <% @list.each do |key, value| %>
+      <tr><td>* </td><td><%= "#{@baseurl}#{key}" %></td><td> => </td><td><%= value %></tr>
     <% end %>
-    </ul>
+    </table>
   </body>
 </html>

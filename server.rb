@@ -27,6 +27,7 @@ class Server
   get "/#{ShortURL.new.adminurl}" do
     protected!
     @list = ShortURL.new.list
+    @baseurl = ShortURL.new.baseurl
     erb :admin
   end
 

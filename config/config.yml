@@ -1,21 +1,20 @@
 # baseurl is the public url of the app.
-#baseurl: http://example.com/
-baseurl: http://localhost:9393/
+baseurl: http://example.com/
 
 # defaulturl is where to redirect users that go directly to the baseurl.
-defaulturl: http://example.com/
+defaulturl: http://www.example.com/
 
 # adminurl is the url with the form to create new shortens urls.
-# example: http://localhost:9393/abcd
-adminurl: abcd
+# example: http://example.com/admin
+adminurl: admin
 
 # dbnum is the redis database number. I avoid using 0 since it's the
 # default db. You probably don't need to change this.
 dbnum: 7
 
 # keysize is the number of characters to be used in your key.
-# keysize 2 *example: http://localhost:9393/Yz
-# keysize 6 *example: http://localhost:9393/YzxX1i
+# keysize 2 *example: http://example.com/Yz
+# keysize 6 *example: http://example.com/YzxX1i
 # Using a small number will limit the number of entries you can have
 # in the db.
 keysize: 3
