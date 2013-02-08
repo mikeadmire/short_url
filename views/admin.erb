@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <title>URL Shortener Admin</title>
+    <title>ShortURL Admin</title>
   </head>
   <body>
     <h1>Shorten</h1>
@@ -26,9 +26,11 @@
     a URL in and a key will be generated for you.</p>
 
     <br /><br />
+    <h3>Existing Shortened URLs</h3>
     <table>
+      <tr><th></th><th>URL</th><th></th><th>Redirects to</th></tr>
     <% @list.each do |key, value| %>
-      <tr><td>* </td><td><%= "#{@baseurl}#{key}" %></td><td> => </td><td><%= value %></tr>
+      <tr><td>* </td><td><%= "#{@baseurl}#{key}" %></td><td> =&gt; </td><td><%= value %></td></tr>
     <% end %>
     </table>
   </body>

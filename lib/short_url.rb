@@ -51,7 +51,7 @@ class ShortURL
     keys.each do |key|
       list[key] = @redis.get(key)
     end
-    list #.sort_by {|key,url| url}
+    list.sort_by {|key,url| key}
   end
  
   def create(key, url)
